@@ -1,42 +1,73 @@
-import { useQuery } from "@tanstack/react-query";
-import type { Publication, Certification, Experience } from "@shared/schema";
+import { portfolioData } from "@/data/portfolio-data";
+import type { Publication, Certification, Experience, Skill, Education, TestScore } from "@/data/portfolio-data";
 
 export function usePortfolioData() {
-  const publicationsQuery = useQuery<Publication[]>({
-    queryKey: ["/api/publications"],
-  });
-
-  const certificationsQuery = useQuery<Certification[]>({
-    queryKey: ["/api/certifications"],
-  });
-
-  const experiencesQuery = useQuery<Experience[]>({
-    queryKey: ["/api/experiences"],
-  });
-
+  // Return static data immediately (no loading state needed)
   return {
-    publications: publicationsQuery.data || [],
-    certifications: certificationsQuery.data || [],
-    experiences: experiencesQuery.data || [],
-    isLoading: publicationsQuery.isLoading || certificationsQuery.isLoading || experiencesQuery.isLoading,
-    error: publicationsQuery.error || certificationsQuery.error || experiencesQuery.error,
+    publications: portfolioData.publications.filter(pub => pub.isVisible),
+    certifications: portfolioData.certifications.filter(cert => cert.isVisible),
+    experiences: portfolioData.experiences.filter(exp => exp.isVisible),
+    skills: portfolioData.skills,
+    education: portfolioData.education,
+    testScores: portfolioData.testScores,
+    personal: portfolioData.personal,
+    isLoading: false,
+    error: null,
   };
 }
 
 export function usePublications() {
-  return useQuery<Publication[]>({
-    queryKey: ["/api/publications"],
-  });
+  return {
+    data: portfolioData.publications.filter(pub => pub.isVisible),
+    isLoading: false,
+    error: null
+  };
 }
 
 export function useCertifications() {
-  return useQuery<Certification[]>({
-    queryKey: ["/api/certifications"],
-  });
+  return {
+    data: portfolioData.certifications.filter(cert => cert.isVisible),
+    isLoading: false,
+    error: null
+  };
 }
 
 export function useExperiences() {
-  return useQuery<Experience[]>({
-    queryKey: ["/api/experiences"],
-  });
+  return {
+    data: portfolioData.experiences.filter(exp => exp.isVisible),
+    isLoading: false,
+    error: null
+  };
+}
+
+export function useSkills() {
+  return {
+    data: portfolioData.skills,
+    isLoading: false,
+    error: null
+  };
+}
+
+export function useEducation() {
+  return {
+    data: portfolioData.education,
+    isLoading: false,
+    error: null
+  };
+}
+
+export function useTestScores() {
+  return {
+    data: portfolioData.testScores,
+    isLoading: false,
+    error: null
+  };
+}
+
+export function usePersonalInfo() {
+  return {
+    data: portfolioData.personal,
+    isLoading: false,
+    error: null
+  };
 }
