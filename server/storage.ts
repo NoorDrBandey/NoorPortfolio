@@ -5,6 +5,8 @@ import {
   experiences, type Experience, type InsertExperience,
   contactMessages, type ContactMessage, type InsertContactMessage
 } from "@shared/schema";
+import { db } from "./db";
+import { eq } from "drizzle-orm";
 
 export interface IStorage {
   // User methods
@@ -317,4 +319,142 @@ export class MemStorage implements IStorage {
   }
 }
 
-export const storage = new MemStorage();
+// DatabaseStorage implementation
+export class DatabaseStorage implements IStorage {
+  async getUser(id: number): Promise<User | undefined> {
+    const [user] = await db.select().from(users).where(eq(users.id, id));
+    return user || undefined;
+  }
+
+  async getUserByUsername(username: string): Promise<User | undefined> {
+    const [user] = await db.select().from(users).where(eq(users.username, username));
+    return user || undefined;
+  }
+
+  async createUser(insertUser: InsertUser): Promise<User> {
+    const [user] = await db
+      .insert(users)
+      .values(insertUser)
+      .returning();
+    return user;
+  }
+
+  async getPublications(): Promise<Publication[]> {
+    return await db.select().from(publications);
+  }
+
+  async getPublication(id: number): Promise<Publication | undefined> {
+    const [publication] = await db.select().from(publications).where(eq(publications.id, id));
+    return publication || undefined;
+  }
+
+  async createPublication(publication: InsertPublication): Promise<Publication> {
+    const [newPublication] = await db
+      .insert(publications)
+      .values(publication)
+      .returning();
+    return newPublication;
+  }
+
+  async updatePublication(id: number, publication: Partial<InsertPublication>): Promise<Publication | undefined> {
+    const [updated] = await db
+      .update(publications)
+      .set(publication)
+      .where(eq(publications.id, id))
+      .returning();
+    return updated || undefined;
+  }
+
+  async deletePublication(id: number): Promise<boolean> {
+    const result = await db.delete(publications).where(eq(publications.id, id));
+    return (result.rowCount || 0) > 0;
+  }
+
+  async getCertifications(): Promise<Certification[]> {
+    return await db.select().from(certifications);
+  }
+
+  async getCertification(id: number): Promise<Certification | undefined> {
+    const [certification] = await db.select().from(certifications).where(eq(certifications.id, id));
+    return certification || undefined;
+  }
+
+  async createCertification(certification: InsertCertification): Promise<Certification> {
+    const [newCertification] = await db
+      .insert(certifications)
+      .values(certification)
+      .returning();
+    return newCertification;
+  }
+
+  async updateCertification(id: number, certification: Partial<InsertCertification>): Promise<Certification | undefined> {
+    const [updated] = await db
+      .update(certifications)
+      .set(certification)
+      .where(eq(certifications.id, id))
+      .returning();
+    return updated || undefined;
+  }
+
+  async deleteCertification(id: number): Promise<boolean> {
+    const result = await db.delete(certifications).where(eq(certifications.id, id));
+    return (result.rowCount || 0) > 0;
+  }
+
+  async getExperiences(): Promise<Experience[]> {
+    return await db.select().from(experiences);
+  }
+
+  async getExperience(id: number): Promise<Experience | undefined> {
+    const [experience] = await db.select().from(experiences).where(eq(experiences.id, id));
+    return experience || undefined;
+  }
+
+  async createExperience(experience: InsertExperience): Promise<Experience> {
+    const [newExperience] = await db
+      .insert(experiences)
+      .values(experience)
+      .returning();
+    return newExperience;
+  }
+
+  async updateExperience(id: number, experience: Partial<InsertExperience>): Promise<Experience | undefined> {
+    const [updated] = await db
+      .update(experiences)
+      .set(experience)
+      .where(eq(experiences.id, id))
+      .returning();
+    return updated || undefined;
+  }
+
+  async deleteExperience(id: number): Promise<boolean> {
+    const result = await db.delete(experiences).where(eq(experiences.id, id));
+    return (result.rowCount || 0) > 0;
+  }
+
+  async getContactMessages(): Promise<ContactMessage[]> {
+    return await db.select().from(contactMessages);
+  }
+
+  async createContactMessage(message: InsertContactMessage): Promise<ContactMessage> {
+    const [newMessage] = await db
+      .insert(contactMessages)
+      .values({
+        ...message,
+        createdAt: new Date().toISOString(),
+        isRead: false
+      })
+      .returning();
+    return newMessage;
+  }
+
+  async markMessageAsRead(id: number): Promise<boolean> {
+    const result = await db
+      .update(contactMessages)
+      .set({ isRead: true })
+      .where(eq(contactMessages.id, id));
+    return (result.rowCount || 0) > 0;
+  }
+}
+
+export const storage = new DatabaseStorage();

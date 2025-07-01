@@ -108,7 +108,7 @@ export default function ContactSection() {
                     href="https://www.linkedin.com/in/noorbandey/" 
                     target="_blank" 
                     rel="noopener noreferrer"
-                    className="flex items-center p-3 bg-blue-50 rounded-lg hover:bg-blue-100 transition-colors"
+                    className="flex items-center p-3 bg-blue-50 dark:bg-blue-950 rounded-lg hover:bg-blue-100 dark:hover:bg-blue-900 transition-colors"
                   >
                     <ExternalLink className="text-blue-600 text-xl w-8 mr-3" />
                     <div>
@@ -118,22 +118,22 @@ export default function ContactSection() {
                   </a>
                   <a 
                     href="#" 
-                    className="flex items-center p-3 bg-green-50 rounded-lg hover:bg-green-100 transition-colors"
+                    className="flex items-center p-3 bg-green-50 dark:bg-green-950 rounded-lg hover:bg-green-100 dark:hover:bg-green-900 transition-colors"
                   >
                     <User className="text-green-600 text-xl w-8 mr-3" />
                     <div>
-                      <p className="font-medium text-gray-900">ResearchGate</p>
-                      <p className="text-sm text-gray-600">Research publications and collaboration</p>
+                      <p className="font-medium text-foreground">ResearchGate</p>
+                      <p className="text-sm text-muted-foreground">Research publications and collaboration</p>
                     </div>
                   </a>
                   <a 
                     href="#" 
-                    className="flex items-center p-3 bg-purple-50 rounded-lg hover:bg-purple-100 transition-colors"
+                    className="flex items-center p-3 bg-purple-50 dark:bg-purple-950 rounded-lg hover:bg-purple-100 dark:hover:bg-purple-900 transition-colors"
                   >
                     <User className="text-purple-600 text-xl w-8 mr-3" />
                     <div>
-                      <p className="font-medium text-gray-900">ORCID</p>
-                      <p className="text-sm text-gray-600">Academic identifier and publications</p>
+                      <p className="font-medium text-foreground">ORCID</p>
+                      <p className="text-sm text-muted-foreground">Academic identifier and publications</p>
                     </div>
                   </a>
                 </div>
