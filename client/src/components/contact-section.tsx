@@ -2,230 +2,248 @@ import { useState } from "react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Mail, Phone, MapPin, Send, ExternalLink, User } from "lucide-react";
-import { useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { useToast } from "@/hooks/use-toast";
-import { insertContactMessageSchema, type InsertContactMessage } from "@shared/schema";
-import { apiRequest } from "@/lib/queryClient";
+import { Mail, Phone, MapPin, Send, ExternalLink, User, MessageCircle, Calendar } from "lucide-react";
+import { usePersonalInfo } from "@/hooks/use-portfolio-data";
 
 export default function ContactSection() {
-  const { toast } = useToast();
-  const queryClient = useQueryClient();
-
-  const form = useForm<InsertContactMessage>({
-    resolver: zodResolver(insertContactMessageSchema),
-    defaultValues: {
-      name: "",
-      email: "",
-      subject: "",
-      message: "",
-    },
+  const { data: personalInfo } = usePersonalInfo();
+  const [formData, setFormData] = useState({
+    name: "",
+    email: "",
+    subject: "",
+    message: "",
   });
 
-  const contactMutation = useMutation({
-    mutationFn: async (data: InsertContactMessage) => {
-      const response = await apiRequest("POST", "/api/contact", data);
-      return response.json();
-    },
-    onSuccess: () => {
-      toast({
-        title: "Message sent successfully!",
-        description: "Thank you for your message. I will get back to you soon.",
-      });
-      form.reset();
-      queryClient.invalidateQueries({ queryKey: ["/api/contact-messages"] });
-    },
-    onError: (error: Error) => {
-      toast({
-        title: "Failed to send message",
-        description: error.message,
-        variant: "destructive",
-      });
-    },
-  });
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    
+    // Create mailto link with form data
+    const subject = encodeURIComponent(formData.subject || "Contact from Portfolio");
+    const body = encodeURIComponent(
+      `Hello Dr. Noor,\n\n${formData.message}\n\nBest regards,\n${formData.name}\n\nEmail: ${formData.email}`
+    );
+    
+    window.location.href = `mailto:${personalInfo.email}?subject=${subject}&body=${body}`;
+  };
 
-  const onSubmit = (data: InsertContactMessage) => {
-    contactMutation.mutate(data);
+  const handleInputChange = (field: string, value: string) => {
+    setFormData(prev => ({ ...prev, [field]: value }));
   };
 
   return (
-    <section id="contact" className="py-16 bg-muted/20">
+    <section id="contact" className="py-20 bg-gradient-to-br from-blue-50 to-purple-50 dark:from-gray-900 dark:to-gray-800">
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center mb-12">
-          <h2 className="text-3xl font-bold text-foreground mb-4">Get In Touch</h2>
-          <div className="w-20 h-1 bg-blue-400 mx-auto"></div>
-          <p className="text-muted-foreground mt-4">Let's connect for collaboration, opportunities, or professional discussions</p>
+        <div className="text-center mb-16">
+          <div className="inline-flex items-center justify-center w-16 h-16 bg-gradient-to-r from-blue-600 to-purple-600 rounded-full mb-6">
+            <MessageCircle className="w-8 h-8 text-white" />
+          </div>
+          <h2 className="text-4xl font-bold text-foreground mb-4">Get In Touch</h2>
+          <p className="text-muted-foreground max-w-2xl mx-auto text-lg">
+            Let's connect for MPH opportunities, research collaboration, or professional discussions
+          </p>
+          <div className="w-20 h-1 bg-gradient-to-r from-blue-400 to-purple-400 mx-auto mt-6"></div>
         </div>
         
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
           {/* Contact Information */}
-          <div className="space-y-6">
-            <Card className="hover-lift">
-              <CardContent className="p-6">
-                <h3 className="font-semibold text-lg text-foreground mb-4">Contact Information</h3>
-                <div className="space-y-4">
-                  <div className="flex items-center">
-                    <Mail className="text-blue-600 w-6 mr-4" />
+          <div className="space-y-8">
+            <Card className="hover-lift border-none shadow-xl bg-white/80 backdrop-blur-sm">
+              <CardContent className="p-8">
+                <h3 className="text-2xl font-semibold text-foreground mb-6 flex items-center">
+                  <Mail className="w-6 h-6 mr-3 text-blue-500" />
+                  Contact Information
+                </h3>
+                <div className="space-y-6">
+                  <div className="flex items-center p-4 bg-blue-50 rounded-lg border border-blue-100">
+                    <Mail className="text-blue-600 w-8 h-8 mr-4 flex-shrink-0" />
                     <div>
-                      <p className="font-medium text-foreground">Email</p>
-                      <a href="mailto:noorulanbandey@gmail.com" className="text-blue-600 hover:text-blue-700">
-                        noorulanbandey@gmail.com
+                      <p className="font-semibold text-foreground">Email</p>
+                      <a 
+                        href={`mailto:${personalInfo.email}`} 
+                        className="text-blue-600 hover:text-blue-700 font-medium transition-colors"
+                      >
+                        {personalInfo.email}
                       </a>
                     </div>
                   </div>
-                  <div className="flex items-center">
-                    <Phone className="text-blue-600 w-6 mr-4" />
+                  
+                  <div className="flex items-center p-4 bg-green-50 rounded-lg border border-green-100">
+                    <Phone className="text-green-600 w-8 h-8 mr-4 flex-shrink-0" />
                     <div>
-                      <p className="font-medium text-foreground">Phone</p>
-                      <a href="tel:+919596626581" className="text-blue-600 hover:text-blue-700">
-                        +91-9596626581
+                      <p className="font-semibold text-foreground">Phone</p>
+                      <a 
+                        href={`tel:${personalInfo.phone}`} 
+                        className="text-green-600 hover:text-green-700 font-medium transition-colors"
+                      >
+                        {personalInfo.phone}
                       </a>
                     </div>
                   </div>
-                  <div className="flex items-center">
-                    <MapPin className="text-blue-600 w-6 mr-4" />
+                  
+                  <div className="flex items-center p-4 bg-purple-50 rounded-lg border border-purple-100">
+                    <MapPin className="text-purple-600 w-8 h-8 mr-4 flex-shrink-0" />
                     <div>
-                      <p className="font-medium text-foreground">Location</p>
-                      <p className="text-muted-foreground">Jammu, J&K, India</p>
+                      <p className="font-semibold text-foreground">Location</p>
+                      <p className="text-purple-600 font-medium">{personalInfo.location}</p>
                     </div>
                   </div>
                 </div>
               </CardContent>
             </Card>
             
-            {/* Social Links */}
-            <Card className="hover-lift">
-              <CardContent className="p-6">
-                <h3 className="font-semibold text-lg text-foreground mb-4">Professional Networks</h3>
-                <div className="space-y-3">
+            {/* Professional Networks */}
+            <Card className="hover-lift border-none shadow-xl bg-white/80 backdrop-blur-sm">
+              <CardContent className="p-8">
+                <h3 className="text-2xl font-semibold text-foreground mb-6 flex items-center">
+                  <ExternalLink className="w-6 h-6 mr-3 text-purple-500" />
+                  Professional Networks
+                </h3>
+                <div className="space-y-4">
                   <a 
-                    href="https://www.linkedin.com/in/noorbandey/" 
+                    href={personalInfo.linkedin}
                     target="_blank" 
                     rel="noopener noreferrer"
-                    className="flex items-center p-3 bg-blue-50 dark:bg-blue-950 rounded-lg hover:bg-blue-100 dark:hover:bg-blue-900 transition-colors"
+                    className="flex items-center p-4 bg-blue-50 rounded-lg hover:bg-blue-100 transition-all duration-300 transform hover:scale-105 border border-blue-100"
                   >
-                    <ExternalLink className="text-blue-600 text-xl w-8 mr-3" />
+                    <ExternalLink className="text-blue-600 w-6 h-6 mr-4" />
                     <div>
-                      <p className="font-medium text-foreground">LinkedIn</p>
-                      <p className="text-sm text-muted-foreground">Professional networking and updates</p>
+                      <p className="font-semibold text-foreground">LinkedIn</p>
+                      <p className="text-sm text-blue-600">Professional networking and updates</p>
                     </div>
                   </a>
-                  <a 
-                    href="#" 
-                    className="flex items-center p-3 bg-green-50 dark:bg-green-950 rounded-lg hover:bg-green-100 dark:hover:bg-green-900 transition-colors"
-                  >
-                    <User className="text-green-600 text-xl w-8 mr-3" />
+                  
+                  <div className="flex items-center p-4 bg-green-50 rounded-lg border border-green-100">
+                    <User className="text-green-600 w-6 h-6 mr-4" />
                     <div>
-                      <p className="font-medium text-foreground">ResearchGate</p>
-                      <p className="text-sm text-muted-foreground">Research publications and collaboration</p>
+                      <p className="font-semibold text-foreground">ORCID</p>
+                      <p className="text-sm text-green-600">Academic identifier and publications</p>
                     </div>
-                  </a>
-                  <a 
-                    href="#" 
-                    className="flex items-center p-3 bg-purple-50 dark:bg-purple-950 rounded-lg hover:bg-purple-100 dark:hover:bg-purple-900 transition-colors"
-                  >
-                    <User className="text-purple-600 text-xl w-8 mr-3" />
+                  </div>
+                  
+                  <div className="flex items-center p-4 bg-orange-50 rounded-lg border border-orange-100">
+                    <Calendar className="text-orange-600 w-6 h-6 mr-4" />
                     <div>
-                      <p className="font-medium text-foreground">ORCID</p>
-                      <p className="text-sm text-muted-foreground">Academic identifier and publications</p>
+                      <p className="font-semibold text-foreground">Available for</p>
+                      <p className="text-sm text-orange-600">MPH program discussions & research collaboration</p>
                     </div>
-                  </a>
+                  </div>
                 </div>
               </CardContent>
             </Card>
           </div>
           
           {/* Contact Form */}
-          <Card className="hover-lift">
-            <CardContent className="p-6">
-              <h3 className="font-semibold text-lg text-foreground mb-4">Send a Message</h3>
-              <Form {...form}>
-                <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <FormField
-                      control={form.control}
-                      name="name"
-                      render={({ field }) => (
-                        <FormItem>
-                          <FormLabel>Full Name</FormLabel>
-                          <FormControl>
-                            <Input placeholder="Your full name" {...field} />
-                          </FormControl>
-                          <FormMessage />
-                        </FormItem>
-                      )}
-                    />
-                    <FormField
-                      control={form.control}
-                      name="email"
-                      render={({ field }) => (
-                        <FormItem>
-                          <FormLabel>Email Address</FormLabel>
-                          <FormControl>
-                            <Input type="email" placeholder="your.email@example.com" {...field} />
-                          </FormControl>
-                          <FormMessage />
-                        </FormItem>
-                      )}
+          <Card className="hover-lift border-none shadow-xl bg-white/80 backdrop-blur-sm">
+            <CardContent className="p-8">
+              <h3 className="text-2xl font-semibold text-foreground mb-6 flex items-center">
+                <Send className="w-6 h-6 mr-3 text-blue-500" />
+                Send a Message
+              </h3>
+              <form onSubmit={handleSubmit} className="space-y-6">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <div>
+                    <label className="block text-sm font-semibold text-foreground mb-2">
+                      Full Name
+                    </label>
+                    <Input 
+                      placeholder="Your full name" 
+                      value={formData.name}
+                      onChange={(e) => handleInputChange('name', e.target.value)}
+                      className="border-2 border-gray-200 focus:border-blue-500"
                     />
                   </div>
-                  <FormField
-                    control={form.control}
-                    name="subject"
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormLabel>Subject</FormLabel>
-                        <Select onValueChange={field.onChange} defaultValue={field.value}>
-                          <FormControl>
-                            <SelectTrigger>
-                              <SelectValue placeholder="Select a topic" />
-                            </SelectTrigger>
-                          </FormControl>
-                          <SelectContent>
-                            <SelectItem value="mph-opportunity">MPH Program Opportunity</SelectItem>
-                            <SelectItem value="collaboration">Research Collaboration</SelectItem>
-                            <SelectItem value="consultation">Professional Consultation</SelectItem>
-                            <SelectItem value="networking">Professional Networking</SelectItem>
-                            <SelectItem value="other">Other</SelectItem>
-                          </SelectContent>
-                        </Select>
-                        <FormMessage />
-                      </FormItem>
-                    )}
+                  <div>
+                    <label className="block text-sm font-semibold text-foreground mb-2">
+                      Email Address
+                    </label>
+                    <Input 
+                      type="email" 
+                      placeholder="your.email@example.com" 
+                      value={formData.email}
+                      onChange={(e) => handleInputChange('email', e.target.value)}
+                      className="border-2 border-gray-200 focus:border-blue-500"
+                    />
+                  </div>
+                </div>
+                
+                <div>
+                  <label className="block text-sm font-semibold text-foreground mb-2">
+                    Subject
+                  </label>
+                  <Select onValueChange={(value) => handleInputChange('subject', value)}>
+                    <SelectTrigger className="border-2 border-gray-200 focus:border-blue-500">
+                      <SelectValue placeholder="Select a topic" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="MPH Program Opportunity">MPH Program Opportunity</SelectItem>
+                      <SelectItem value="Research Collaboration">Research Collaboration</SelectItem>
+                      <SelectItem value="Professional Consultation">Professional Consultation</SelectItem>
+                      <SelectItem value="Professional Networking">Professional Networking</SelectItem>
+                      <SelectItem value="Other Inquiry">Other Inquiry</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
+                
+                <div>
+                  <label className="block text-sm font-semibold text-foreground mb-2">
+                    Message
+                  </label>
+                  <Textarea
+                    placeholder="Your message here..."
+                    rows={5}
+                    value={formData.message}
+                    onChange={(e) => handleInputChange('message', e.target.value)}
+                    className="border-2 border-gray-200 focus:border-blue-500"
                   />
-                  <FormField
-                    control={form.control}
-                    name="message"
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormLabel>Message</FormLabel>
-                        <FormControl>
-                          <Textarea
-                            placeholder="Your message here..."
-                            rows={4}
-                            {...field}
-                          />
-                        </FormControl>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
-                  <Button 
-                    type="submit" 
-                    className="w-full bg-blue-600 hover:bg-blue-700"
-                    disabled={contactMutation.isPending}
-                  >
-                    <Send className="w-4 h-4 mr-2" />
-                    {contactMutation.isPending ? "Sending..." : "Send Message"}
-                  </Button>
-                </form>
-              </Form>
+                </div>
+                
+                <Button 
+                  type="submit" 
+                  className="w-full bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white py-3 rounded-lg shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105"
+                >
+                  <Send className="w-5 h-5 mr-2" />
+                  Send Message via Email
+                </Button>
+                
+                <p className="text-sm text-muted-foreground text-center">
+                  This will open your email client to send the message directly to Dr. Noor
+                </p>
+              </form>
+            </CardContent>
+          </Card>
+        </div>
+
+        {/* Call to Action */}
+        <div className="mt-16 text-center">
+          <Card className="hover-lift border-none shadow-xl bg-gradient-to-r from-blue-500 to-purple-600 text-white">
+            <CardContent className="p-8">
+              <h3 className="text-2xl font-semibold mb-4">Ready to Connect?</h3>
+              <p className="text-lg opacity-90 mb-6 max-w-2xl mx-auto">
+                I'm actively seeking MPH program opportunities and research collaborations. 
+                Let's discuss how we can work together to advance public health initiatives.
+              </p>
+              <div className="flex flex-col sm:flex-row justify-center gap-4">
+                <Button 
+                  asChild
+                  className="bg-white text-blue-600 hover:bg-gray-100 px-8 py-3 rounded-full shadow-lg hover:shadow-xl transition-all duration-300"
+                >
+                  <a href={`mailto:${personalInfo.email}`}>
+                    <Mail className="w-5 h-5 mr-2" />
+                    Email Directly
+                  </a>
+                </Button>
+                <Button 
+                  asChild
+                  className="bg-white/20 text-white border-2 border-white hover:bg-white hover:text-blue-600 px-8 py-3 rounded-full shadow-lg hover:shadow-xl transition-all duration-300"
+                >
+                  <a href={personalInfo.linkedin} target="_blank" rel="noopener noreferrer">
+                    <ExternalLink className="w-5 h-5 mr-2" />
+                    Connect on LinkedIn
+                  </a>
+                </Button>
+              </div>
             </CardContent>
           </Card>
         </div>
