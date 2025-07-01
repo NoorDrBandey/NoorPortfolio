@@ -11,11 +11,11 @@ export default function AboutSection() {
   ];
 
   return (
-    <section id="about" className="py-16 bg-white">
+    <section id="about" className="py-16 bg-background">
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-12">
-          <h2 className="text-3xl font-bold text-gray-900 mb-4">About Me</h2>
-          <div className="w-20 h-1 bg-blue-600 mx-auto"></div>
+          <h2 className="text-3xl font-bold text-foreground mb-4">About Me</h2>
+          <div className="w-20 h-1 bg-blue-400 mx-auto"></div>
         </div>
         
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">

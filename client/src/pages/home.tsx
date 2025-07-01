@@ -9,7 +9,7 @@ import ContactSection from "@/components/contact-section";
 
 export default function Home() {
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-background text-foreground">
       <Navigation />
       <main>
         <HeroSection />
@@ -31,7 +31,7 @@ export default function Home() {
               <a href="mailto:noorulanbandey@gmail.com" className="text-gray-400 hover:text-white transition-colors">
                 <i className="fas fa-envelope text-xl"></i>
               </a>
-              <a href="https://linkedin.com/in/noorulanbandey" target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-white transition-colors">
+              <a href="https://www.linkedin.com/in/noorbandey/" target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-white transition-colors">
                 <i className="fab fa-linkedin text-xl"></i>
               </a>
               <a href="tel:+919596626581" className="text-gray-400 hover:text-white transition-colors">

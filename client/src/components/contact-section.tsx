@@ -105,7 +105,7 @@ export default function ContactSection() {
                 <h3 className="font-semibold text-lg text-gray-900 mb-4">Professional Networks</h3>
                 <div className="space-y-3">
                   <a 
-                    href="https://linkedin.com/in/noorulanbandey" 
+                    href="https://www.linkedin.com/in/noorbandey/" 
                     target="_blank" 
                     rel="noopener noreferrer"
                     className="flex items-center p-3 bg-blue-50 rounded-lg hover:bg-blue-100 transition-colors"

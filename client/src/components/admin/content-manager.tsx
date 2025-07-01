@@ -121,14 +121,7 @@ export default function ContentManager() {
   });
 
   const onSubmitPublication = (data: InsertPublication) => {
-    // Convert contributions string to array
-    const contributionsText = (data as any).contributionsText || "";
-    const contributionsArray = contributionsText.split("\n").filter((c: string) => c.trim());
-    
-    createPublicationMutation.mutate({
-      ...data,
-      contributions: contributionsArray,
-    });
+    createPublicationMutation.mutate(data);
   };
 
   const onSubmitCertification = (data: InsertCertification) => {
@@ -240,19 +233,18 @@ export default function ContentManager() {
                         </FormItem>
                       )}
                     />
-                    <FormField
-                      control={publicationForm.control}
-                      name="contributionsText"
-                      render={({ field }) => (
-                        <FormItem>
-                          <FormLabel>Contributions (one per line)</FormLabel>
-                          <FormControl>
-                            <Textarea {...field} rows={4} placeholder="Enter each contribution on a new line" />
-                          </FormControl>
-                          <FormMessage />
-                        </FormItem>
-                      )}
-                    />
+                    <div>
+                      <Label>Contributions (one per line)</Label>
+                      <Textarea 
+                        name="contributionsText"
+                        rows={4} 
+                        placeholder="Enter each contribution on a new line"
+                        onChange={(e) => {
+                          const contributionsArray = e.target.value.split('\n').filter(c => c.trim());
+                          publicationForm.setValue('contributions', contributionsArray);
+                        }}
+                      />
+                    </div>
                     <FormField
                       control={publicationForm.control}
                       name="impact"

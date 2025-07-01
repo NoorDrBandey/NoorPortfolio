@@ -3,37 +3,37 @@
 @tailwind utilities;
 
 :root {
-  --background: hsl(0, 0%, 100%);
-  --foreground: hsl(20, 14.3%, 4.1%);
-  --muted: hsl(60, 4.8%, 95.9%);
-  --muted-foreground: hsl(25, 5.3%, 44.7%);
-  --popover: hsl(0, 0%, 100%);
-  --popover-foreground: hsl(20, 14.3%, 4.1%);
-  --card: hsl(0, 0%, 100%);
-  --card-foreground: hsl(20, 14.3%, 4.1%);
-  --border: hsl(20, 5.9%, 90%);
-  --input: hsl(20, 5.9%, 90%);
+  --background: hsl(220, 13%, 8%);
+  --foreground: hsl(0, 0%, 95%);
+  --muted: hsl(217, 10%, 15%);
+  --muted-foreground: hsl(217, 10%, 65%);
+  --popover: hsl(220, 13%, 12%);
+  --popover-foreground: hsl(0, 0%, 95%);
+  --card: hsl(220, 13%, 10%);
+  --card-foreground: hsl(0, 0%, 95%);
+  --border: hsl(217, 10%, 20%);
+  --input: hsl(217, 10%, 20%);
   --primary: hsl(207, 90%, 54%);
   --primary-foreground: hsl(211, 100%, 99%);
-  --secondary: hsl(60, 4.8%, 95.9%);
-  --secondary-foreground: hsl(24, 9.8%, 10%);
-  --accent: hsl(60, 4.8%, 95.9%);
-  --accent-foreground: hsl(24, 9.8%, 10%);
+  --secondary: hsl(217, 10%, 15%);
+  --secondary-foreground: hsl(0, 0%, 95%);
+  --accent: hsl(217, 10%, 15%);
+  --accent-foreground: hsl(0, 0%, 95%);
   --destructive: hsl(0, 84.2%, 60.2%);
   --destructive-foreground: hsl(60, 9.1%, 97.8%);
-  --ring: hsl(20, 14.3%, 4.1%);
+  --ring: hsl(217, 10%, 25%);
   --radius: 0.5rem;
   
-  /* Medical theme colors */
-  --medical-50: hsl(207, 100%, 97%);
-  --medical-100: hsl(215, 100%, 94%);
+  /* Medical theme colors - dark version */
+  --medical-50: hsl(207, 50%, 12%);
+  --medical-100: hsl(215, 45%, 18%);
   --medical-500: hsl(207, 90%, 54%);
   --medical-600: hsl(207, 90%, 46%);
   --medical-700: hsl(207, 88%, 38%);
   --medical-900: hsl(207, 78%, 21%);
   
-  --healthcare-50: hsl(199, 100%, 96%);
-  --healthcare-100: hsl(198, 100%, 88%);
+  --healthcare-50: hsl(199, 40%, 12%);
+  --healthcare-100: hsl(198, 35%, 18%);
   --healthcare-500: hsl(188, 94%, 35%);
   --healthcare-600: hsl(188, 86%, 29%);
   --healthcare-700: hsl(186, 83%, 25%);
