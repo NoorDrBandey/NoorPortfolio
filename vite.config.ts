@@ -25,7 +25,7 @@ export default defineConfig({
       deny: ["**/.*"],
     },
   },
-  // GitHub Pages configuration - UPDATE THIS with your actual repo name
-  base: process.env.NODE_ENV === 'production' ? '/YOUR_REPO_NAME/' : '/',
+  // Use relative base for GitHub Pages - this fixes asset loading
+  base: "./",
   publicDir: path.resolve(__dirname, "client", "public"),
 });
