@@ -20,13 +20,13 @@ export default function AboutSection() {
         
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
           <div className="space-y-6">
-            <Card className="bg-gray-50">
+            <Card className="bg-card">
               <CardContent className="p-6">
                 <div className="flex items-start mb-4">
                   <BookOpen className="w-6 h-6 text-blue-600 mt-1 mr-3" />
-                  <h3 className="text-xl font-semibold text-gray-900">Professional Summary</h3>
+                  <h3 className="text-xl font-semibold text-foreground">Professional Summary</h3>
                 </div>
-                <p className="text-gray-700 leading-relaxed">
+                <p className="text-muted-foreground leading-relaxed">
                   I'm an MBBS graduate with one year of working experience in the Medical ICU. I'd describe myself as hardworking, 
                   self-driven and disciplined. I've always had a strong passion for medicine and learning the human body. 
                   Becoming a doctor has allowed me to use my passion to help society.
@@ -34,13 +34,13 @@ export default function AboutSection() {
               </CardContent>
             </Card>
             
-            <Card className="bg-blue-50">
+            <Card className="bg-card border-blue-200 dark:border-blue-800">
               <CardContent className="p-6">
                 <div className="flex items-start mb-4">
                   <Target className="w-6 h-6 text-blue-600 mt-1 mr-3" />
-                  <h3 className="text-xl font-semibold text-gray-900">MPH Aspirations</h3>
+                  <h3 className="text-xl font-semibold text-foreground">MPH Aspirations</h3>
                 </div>
-                <p className="text-gray-700 leading-relaxed">
+                <p className="text-muted-foreground leading-relaxed">
                   I am actively seeking opportunities to pursue a Masters in Public Health to expand my impact beyond clinical practice. 
                   My goal is to contribute to community health initiatives, policy development, and health research on a broader scale.
                 </p>
@@ -49,15 +49,15 @@ export default function AboutSection() {
           </div>
           
           <div>
-            <h3 className="text-xl font-semibold text-gray-900 mb-6">Core Skills</h3>
+            <h3 className="text-xl font-semibold text-foreground mb-6">Core Skills</h3>
             <div className="space-y-6">
               {skills.map((skill, index) => (
                 <div key={index} className="skill-item">
                   <div className="flex justify-between items-center mb-2">
-                    <span className="font-medium text-gray-800">{skill.name}</span>
+                    <span className="font-medium text-foreground">{skill.name}</span>
                     <Badge variant="secondary">{skill.level >= 90 ? "Expert" : skill.level >= 80 ? "Advanced" : "Intermediate"}</Badge>
                   </div>
-                  <div className="w-full bg-gray-200 rounded-full h-2">
+                  <div className="w-full bg-muted rounded-full h-2">
                     <div 
                       className={`${skill.color} h-2 rounded-full skill-bar`} 
                       style={{ width: `${skill.level}%` }}

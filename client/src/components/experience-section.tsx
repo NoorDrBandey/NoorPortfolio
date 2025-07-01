@@ -14,8 +14,8 @@ export default function ExperienceSection() {
       <section id="experience" className="py-16 bg-background">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
-            <h2 className="text-3xl font-bold text-gray-900 mb-4">Professional Experience</h2>
-            <div className="w-20 h-1 bg-blue-600 mx-auto"></div>
+            <h2 className="text-3xl font-bold text-foreground mb-4">Professional Experience</h2>
+            <div className="w-20 h-1 bg-blue-400 mx-auto"></div>
           </div>
           <div className="space-y-8">
             {[1, 2, 3].map((i) => (
@@ -59,8 +59,8 @@ export default function ExperienceSection() {
     <section id="experience" className="py-16 bg-background">
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-12">
-          <h2 className="text-3xl font-bold text-gray-900 mb-4">Professional Experience</h2>
-          <div className="w-20 h-1 bg-blue-600 mx-auto"></div>
+          <h2 className="text-3xl font-bold text-foreground mb-4">Professional Experience</h2>
+          <div className="w-20 h-1 bg-blue-400 mx-auto"></div>
         </div>
         
         <div className="space-y-8">
