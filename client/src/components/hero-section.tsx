@@ -2,6 +2,7 @@ import { Download, Mail, MapPin, Phone, ExternalLink } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { useGSAPAnimations } from "@/hooks/use-gsap-animations";
+import profileImage from "@assets/1704128477041_1751344244247.jpeg";
 
 export default function HeroSection() {
   const { addSectionRef } = useGSAPAnimations();
@@ -23,9 +24,13 @@ export default function HeroSection() {
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center">
           <div className="mb-8">
-            {/* Professional headshot placeholder */}
-            <div className="gsap-hero w-32 h-32 mx-auto rounded-full bg-gradient-to-br from-blue-500/20 to-cyan-500/20 flex items-center justify-center mb-6 border-4 border-border/50 shadow-lg backdrop-blur-sm">
-              <div className="text-4xl text-blue-400">👨‍⚕️</div>
+            {/* Professional headshot */}
+            <div className="gsap-hero w-32 h-32 mx-auto rounded-full mb-6 border-4 border-blue-400/50 shadow-lg overflow-hidden">
+              <img 
+                src={profileImage} 
+                alt="Dr. Noor Ul An Bandey" 
+                className="w-full h-full object-cover"
+              />
             </div>
             <h1 className="gsap-hero text-4xl md:text-5xl font-bold text-foreground mb-4">
               Dr. Noor Ul An Bandey

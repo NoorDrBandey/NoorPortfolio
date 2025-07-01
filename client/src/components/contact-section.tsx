@@ -55,12 +55,12 @@ export default function ContactSection() {
   };
 
   return (
-    <section id="contact" className="py-16 bg-gray-50">
+    <section id="contact" className="py-16 bg-muted/20">
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-12">
-          <h2 className="text-3xl font-bold text-gray-900 mb-4">Get In Touch</h2>
-          <div className="w-20 h-1 bg-blue-600 mx-auto"></div>
-          <p className="text-gray-600 mt-4">Let's connect for collaboration, opportunities, or professional discussions</p>
+          <h2 className="text-3xl font-bold text-foreground mb-4">Get In Touch</h2>
+          <div className="w-20 h-1 bg-blue-400 mx-auto"></div>
+          <p className="text-muted-foreground mt-4">Let's connect for collaboration, opportunities, or professional discussions</p>
         </div>
         
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
@@ -68,12 +68,12 @@ export default function ContactSection() {
           <div className="space-y-6">
             <Card className="hover-lift">
               <CardContent className="p-6">
-                <h3 className="font-semibold text-lg text-gray-900 mb-4">Contact Information</h3>
+                <h3 className="font-semibold text-lg text-foreground mb-4">Contact Information</h3>
                 <div className="space-y-4">
                   <div className="flex items-center">
                     <Mail className="text-blue-600 w-6 mr-4" />
                     <div>
-                      <p className="font-medium text-gray-900">Email</p>
+                      <p className="font-medium text-foreground">Email</p>
                       <a href="mailto:noorulanbandey@gmail.com" className="text-blue-600 hover:text-blue-700">
                         noorulanbandey@gmail.com
                       </a>
@@ -82,7 +82,7 @@ export default function ContactSection() {
                   <div className="flex items-center">
                     <Phone className="text-blue-600 w-6 mr-4" />
                     <div>
-                      <p className="font-medium text-gray-900">Phone</p>
+                      <p className="font-medium text-foreground">Phone</p>
                       <a href="tel:+919596626581" className="text-blue-600 hover:text-blue-700">
                         +91-9596626581
                       </a>
@@ -91,8 +91,8 @@ export default function ContactSection() {
                   <div className="flex items-center">
                     <MapPin className="text-blue-600 w-6 mr-4" />
                     <div>
-                      <p className="font-medium text-gray-900">Location</p>
-                      <p className="text-gray-600">Jammu, J&K, India</p>
+                      <p className="font-medium text-foreground">Location</p>
+                      <p className="text-muted-foreground">Jammu, J&K, India</p>
                     </div>
                   </div>
                 </div>
@@ -102,7 +102,7 @@ export default function ContactSection() {
             {/* Social Links */}
             <Card className="hover-lift">
               <CardContent className="p-6">
-                <h3 className="font-semibold text-lg text-gray-900 mb-4">Professional Networks</h3>
+                <h3 className="font-semibold text-lg text-foreground mb-4">Professional Networks</h3>
                 <div className="space-y-3">
                   <a 
                     href="https://www.linkedin.com/in/noorbandey/" 
@@ -112,8 +112,8 @@ export default function ContactSection() {
                   >
                     <ExternalLink className="text-blue-600 text-xl w-8 mr-3" />
                     <div>
-                      <p className="font-medium text-gray-900">LinkedIn</p>
-                      <p className="text-sm text-gray-600">Professional networking and updates</p>
+                      <p className="font-medium text-foreground">LinkedIn</p>
+                      <p className="text-sm text-muted-foreground">Professional networking and updates</p>
                     </div>
                   </a>
                   <a 
@@ -144,7 +144,7 @@ export default function ContactSection() {
           {/* Contact Form */}
           <Card className="hover-lift">
             <CardContent className="p-6">
-              <h3 className="font-semibold text-lg text-gray-900 mb-4">Send a Message</h3>
+              <h3 className="font-semibold text-lg text-foreground mb-4">Send a Message</h3>
               <Form {...form}>
                 <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
